@@ -18,7 +18,7 @@
     function init() {
       const uagentLow = navigator.userAgent.toLocaleLowerCase();
       console.info('agent info: ' + uagentLow);
-      
+
       if (~uagentLow.indexOf('iphone') || (~uagentLow.indexOf('android') && ~uagentLow.indexOf('wv'))) {
         var scriptTag = document.createElement('script');
         scriptTag.setAttribute('src', './cordova.js');
@@ -30,10 +30,13 @@
         }
       } else {
         console.warn('브라우저 상태에서는 플러그인 테스트를 할 수 없습니다.');
-        return;
       }
+
+      var scriptMain = document.createElement('script');
+      scriptMain.setAttribute('src', './static/js/main.js');
+      document.body.appendChild(scriptMain);
     }
     init();
   </script>
-  <script type="text/javascript" src="/static/js/main.js"></script></body>
+  <!-- <script type="text/javascript" src="/static/js/main.js"></script></body> -->
 </html>
