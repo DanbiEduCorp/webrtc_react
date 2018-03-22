@@ -1,5 +1,5 @@
 import moment from 'moment';
-import {FormMode} from 'wink_mobile_commons/dist/form/types';
+// import {FormMode} from 'wink_mobile_commons/dist/form/types';
 import {values} from './';
 
 const defaultPagination = {size: 'small', showSizeChanger:true, showQuickJumper: true};

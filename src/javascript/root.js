@@ -25,7 +25,8 @@ import {socket as createSocketIoMiddleware } from './redux/middlewares';
 
 import { Login, Page404, Page500 } from './layout';
 
-const history = createBrowserHistory({basename: '/browser/www'});
+// const history = createBrowserHistory({basename: '/browser/www'});
+const history = createBrowserHistory();
 
 const middleware = routerMiddleware(history);
 const loggerMiddleware = createLogger({
