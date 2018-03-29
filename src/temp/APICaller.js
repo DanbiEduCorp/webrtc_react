@@ -25,9 +25,9 @@ const getAPIHost = () => {
   } else {
     switch (window.wink_env) {
       case 'production':
-        return 'https://parent.wink.co.kr';
+        return 'https://student.wink.co.kr';
       case 'staging':
-        return 'https://parent.danbi.biz';
+        return 'https://student.danbi.biz';
       case 'dev':
         return window.wink_devhost || 'not_defined_host';
       default:
@@ -38,6 +38,7 @@ const getAPIHost = () => {
 
 const APIHost = getAPIHost();
 window.APIHost = APIHost;
+window.wink_axios = axios;
 
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
@@ -199,22 +200,26 @@ class APIMonitor {
 class APICaller {
   static post(url, params = {}, options = {}) {
     const fullUrl = getMakeURL(url);
-    if (cordovaHTTP !== undefined) {
-      console.log('[APICaller] using cordovaHTTP..');
-      return new Promise((resolve, reject) => {
-        cordovaHTTP.post(fullUrl, paramsToUnderscore(params), res => {
-          console.log('[APICaller] cordovaHTTP res', res);
-          resolve(docsToCamelCase(res));
-        }, err => {
-          console.error('[APICaller] cordovaHTTP err', err);
-          reject(docsToCamelCase(err));
-        })
-      });
-
-    } else {
-      return axios.post(fullUrl, paramsToUnderscore(params), options).then(docsToCamelCase);
-    }
+    console.log('[APICaller] headers in axios in post', axios.default.headers);
+    return axios.post(fullUrl, paramsToUnderscore(params), options).then(docsToCamelCase);
   }
+  // static post(url, params = {}, options = {}) {
+  // 	const fullUrl = getMakeURL(url);
+  // 	if (cordova && cordova.plugin && cordova.plugin.http) {
+  // 		console.log('[APICaller] using cordova.plugin.http.post..');
+  // 		return new Promise((resolve, reject) => {
+  // 			cordova.plugin.http.post(fullUrl, paramsToUnderscore(params), null, res => {
+  // 				console.log('[APICaller] cordova.plugin.http res', res);
+  // 				resolve(docsToCamelCase(res));
+  // 			}, err => {
+  // 				console.error('[APICaller] cordova.plugin.http err', err);
+  // 				reject(docsToCamelCase(err));
+  // 			});
+  // 		});
+  // 	} else {
+  // 		return axios.post(fullUrl, paramsToUnderscore(params), options).then(docsToCamelCase);
+  // 	}
+  // }
   static get(url, params = null, isNoWarning = false) {
     const fullUrl = getMakeURL(url);
 
@@ -236,6 +241,22 @@ class APICaller {
       const instance = axios.create();
       return instance.get(fullUrl + (str === '' ? '' : '?') + str)
     }
+
+    // if (cordova && cordova.plugin && cordova.plugin.http) {
+    // 	console.log('[APICaller] using cordova.plugin.http.get..');
+    // 	return new Promise((resolve, reject) => {
+    // 		cordova.plugin.http.get(fullUrl + (str === '' ? '' : '?') + str, null, res => {
+    // 			console.log('[APICaller] cordova.plugin.http res', res);
+    // 			if (config.caching === true) {
+    // 				APICache.put(url, params, res);
+    // 			}
+    // 			resolve(docsToCamelCase(res));
+    // 		}, err => {
+    // 			console.error('[APICaller] cordova.plugin.http err', err);
+    // 			reject(docsToCamelCase(err));
+    // 		});
+    // 	});
+    // } else {
     return axios.get(fullUrl + (str === '' ? '' : '?') + str)
       .then((response) => {
         if (config.caching === true) {
@@ -244,6 +265,7 @@ class APICaller {
         return response;
       })
       .then(docs => docsToCamelCase(docs, params));
+    // }
   }
   static getCache(url) {
     return Async(function* (url) {
