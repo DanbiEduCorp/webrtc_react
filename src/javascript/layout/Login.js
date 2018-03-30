@@ -42,13 +42,14 @@ class Login extends React.Component {
     }
 
     componentDidMount() {
-        const authToken = localStorage.getItem(values.storageKey.AUTH_TOKENNAME);
-        if(authToken) {
-            this.authLogin({authToken, autoLogin: true});
-        }
+        // const authToken = localStorage.getItem(values.storageKey.AUTH_TOKENNAME);
+        // if(authToken) {
+        //     this.authLogin({authToken, autoLogin: true});
+        // }
     }
 
     authLogin(params) {
+        console.log('[Login] authLogin...', params);
         this.props.authLogin({...params, actorType: values.actorType.parent})
             .then(({actor}) => {
                 if(service.getValue(params, 'autoLogin')) {
@@ -74,17 +75,22 @@ class Login extends React.Component {
     }
 
     login(params) {
+        console.log('[Login] login.params', params);
         this.props.login(params)
-            .then(({actor}) => {
+            .then(accountInfo => {
+                // console.log('[Login] login.then.accountInfo', accountInfo);
                 if(service.getValue(params, 'autoLogin')) {
-                    return APICaller.get(api.getAuthToken(service.getValue(actor, 'authDetail.id', '')).url, {})
+                    return APICaller.get(api.getAuthToken(accountInfo.authId).url, {})
                         .then(({data}) => {
+                            console.log('[Login] data in login.getAuthToken', data);
                             localStorage.setItem(values.storageKey.AUTH_TOKENNAME, data.authToken);
                         })
                 }
             })
             .then(() => {
+                console.log('[Login] before moveHome');
                 this.props.moveHome('/');
+                console.log('[Login] after moveHome');
             })
             .catch(err => {
                 //TODO : 로그인 실패 메시지 출력
@@ -144,7 +150,7 @@ class Login extends React.Component {
                         </Flex>
                     </Flex.Item>
                     <Flex.Item className="login-input-wrapper">
-                        <Tabs tabs={values.tabs} initialPage={1} animated={false} useOnPan={false}>
+                        <Tabs tabs={values.tabs} initialPage={0} animated={false} useOnPan={false}>
                             <div className="tab-div">
                                 <List className="login-input-list">
                                     <InputItem

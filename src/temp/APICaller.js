@@ -1,6 +1,6 @@
 import axios from 'axios';
-import APICache from './APICache';
-import Async from './Async';
+import APICache from 'wink_mobile_commons/dist/api/APICache';
+import Async from 'wink_mobile_commons/dist/api/Async';
 
 const config = {
   debug: false,
@@ -11,7 +11,7 @@ const config = {
 }
 
 const getAPIHost = () => {
-  if (window.wink_env === undefined) {
+  if (window.wink_cordova_env === undefined) {
     if (process.env.NODE_ENV === 'development') {
       if (config.hostName) {
         return config.hostName;
@@ -23,13 +23,13 @@ const getAPIHost = () => {
       return '';
     }
   } else {
-    switch (window.wink_env) {
+    switch (window.wink_cordova_env) {
       case 'production':
         return 'https://student.wink.co.kr';
       case 'staging':
         return 'https://student.danbi.biz';
       case 'dev':
-        return window.wink_devhost || 'not_defined_host';
+        return window.wink_cordova_dev_host || 'not_defined_host';
       default:
         return '';
     }
@@ -198,10 +198,28 @@ class APIMonitor {
 }
 
 class APICaller {
+  static setAuthHeader(authToken) {
+    axios.defaults.headers.common['X-ACTOR-TYPE'] = 2;  //  actorType을 부모로 지정
+    axios.defaults.headers.common['X-AUTH-TOKEN'] = authToken; //  모든 request에 authTocken을 심어야 함
+  }
+
+  // static post(url, params = {}, options = {}) {
+  // 	const fullUrl = getMakeURL(url);
+  // 	console.log('[APICaller] headers in axios in post', axios.default.headers);
+  // 	return axios.post(fullUrl, paramsToUnderscore(params), options).then(docsToCamelCase);
+  // }
   static post(url, params = {}, options = {}) {
     const fullUrl = getMakeURL(url);
-    console.log('[APICaller] headers in axios in post', axios.default.headers);
-    return axios.post(fullUrl, paramsToUnderscore(params), options).then(docsToCamelCase);
+
+    return axios.post(fullUrl, paramsToUnderscore({ ...params, only_auth_token: true }), options)
+      .then(res => {
+        if (res.data.auth_token) {
+          console.log('[APICaller] setAuthHeader: ' + res.data.auth_token);
+          APICaller.setAuthHeader(res.data.auth_token);
+        }
+
+        return docsToCamelCase(res);
+      });
   }
   // static post(url, params = {}, options = {}) {
   // 	const fullUrl = getMakeURL(url);

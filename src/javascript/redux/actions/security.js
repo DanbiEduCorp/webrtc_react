@@ -29,12 +29,14 @@ export const login = ({username, password}) => {
         // 로그인 시작
         dispatch(creator.loginRequest());
         return SecurityService.authenticate({username, password})
-            .then(({authId, humanName, isAdmin, userName}) => {
+            .then((data) => {
+                const { authId, humanName, isAdmin, userName } = data;
                 // 인증 정보를 먼저 Store에 등록
                 dispatch(creator.loginAuth({authId, humanName, isAdmin, userName}));
-                return SecurityService.actorLogin({authId, actorType});
+                // return SecurityService.actorLogin({authId, actorType});
+                return { authId, humanName, isAdmin, userName, actorType };
             })
-            .then(data=> {
+            .then(data => {
                 // actor 생성
                 dispatch(creator.loginSuccess(data));
                 // TODO : SessionService 대신에  store 판단 가능하지 않나?
@@ -46,15 +48,18 @@ export const login = ({username, password}) => {
 
 export const authLogin = (params) => {
     return (dispatch, getState) => {
+        const actorType = getState().security.actorType;
         // 로그인 시작
         dispatch(creator.loginRequest());
         return SecurityService.authenticate(params)
-            .then(({authId, humanName, isAdmin, userName}) => {
+            .then((data) => {
+                const { authId, humanName, isAdmin, userName } = data;
                 // 인증 정보를 먼저 Store에 등록
                 dispatch(creator.loginAuth({authId, humanName, isAdmin, userName}));
-                return SecurityService.actorLogin({authId, actorType: params.actorType});
+                // return SecurityService.actorLogin({authId, actorType: params.actorType});
+                return { authId, humanName, isAdmin, userName, actorType };
             })
-            .then(data=> {
+            .then(data => {
                 // actor 생성
                 dispatch(creator.loginSuccess(data));
                 // TODO : SessionService 대신에  store 판단 가능하지 않나?
@@ -63,6 +68,47 @@ export const authLogin = (params) => {
             });
     };
 };
+
+// export const login = ({ username, password }) => {
+//     return (dispatch, getState) => {
+//         const actorType = getState().security.actorType;
+//         // 로그인 시작
+//         dispatch(creator.loginRequest());
+//         return SecurityService.authenticate({ username, password })
+//             .then(({ authId, humanName, isAdmin, userName }) => {
+//                 // 인증 정보를 먼저 Store에 등록
+//                 dispatch(creator.loginAuth({ authId, humanName, isAdmin, userName }));
+//                 return SecurityService.actorLogin({ authId, actorType });
+//             })
+//             .then(data => {
+//                 // actor 생성
+//                 dispatch(creator.loginSuccess(data));
+//                 // TODO : SessionService 대신에  store 판단 가능하지 않나?
+//                 SessionService.login(getState().security);
+//                 return data;
+//             });
+//     };
+// };
+
+// export const authLogin = (params) => {
+//     return (dispatch, getState) => {
+//         // 로그인 시작
+//         dispatch(creator.loginRequest());
+//         return SecurityService.authenticate(params)
+//             .then(({ authId, humanName, isAdmin, userName }) => {
+//                 // 인증 정보를 먼저 Store에 등록
+//                 dispatch(creator.loginAuth({ authId, humanName, isAdmin, userName }));
+//                 return SecurityService.actorLogin({ authId, actorType: params.actorType });
+//             })
+//             .then(data => {
+//                 // actor 생성
+//                 dispatch(creator.loginSuccess(data));
+//                 // TODO : SessionService 대신에  store 판단 가능하지 않나?
+//                 SessionService.login(getState().security);
+//                 return data;
+//             });
+//     };
+// };
 
 export const loginFail = () => {
     return (dispatch) => {
