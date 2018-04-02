@@ -1,39 +1,73 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>윙크 학부모 아이폰</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
   <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
   <!-- <script src="cordova.js"></script> -->
 </head>
+
 <body>
   <div id="root">
   </div>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
   <script>
     function init() {
       const uagentLow = navigator.userAgent.toLocaleLowerCase();
       console.info('agent info: ' + uagentLow);
 
-      if (~uagentLow.indexOf('iphone') || (~uagentLow.indexOf('android'))) {
+      if (~uagentLow.indexOf('iphone') || (~uagentLow.indexOf('android') && ~uagentLow.indexOf('wv'))) {
+        window.wink_cordova_env = 'staging';
+        window.wink_cordova_dev_host = 'http://server.local.danbi';        
         var scriptTag = document.createElement('script');
-        scriptTag.setAttribute('src', './cordova.js');
+        scriptTag.setAttribute('src', 'cordova.js');
         document.head.appendChild(scriptTag);
 
         document.addEventListener("deviceready", onDeviceReady, false);
         function onDeviceReady() {
           console.info('onDeviceReady');
         }
+
+        var scriptMain = document.createElement('script');
+        scriptMain.setAttribute('src', 'static/js/main.js');
+        document.body.appendChild(scriptMain);
       } else {
-        console.warn('브라우저 상태에서는 플러그인 테스트를 할 수 없습니다.');
-        return;
+        //  브라우저로 띄우는 경우는 개발 환경에서만이라고 가정하고 작성한 코드
+        //  yarn start로 구동한 경우에 해당하며, cordova server로 구동한 경우에는
+        //  주석처리한 부분으로 교체해야 한다.
+
+        //  yarn start로 실행하는 경우 코드 시작
+        // console.warn('브라우저 상태에서는 플러그인 테스트를 할 수 없습니다.');
+        // var scriptShared = document.createElement('script');
+        // scriptShared.setAttribute('src', '/shared.js?' + Date.now());
+        // document.body.appendChild(scriptShared);
+
+        // var scriptMain = document.createElement('script');
+        // // scriptMain.setAttribute('src', 'static/js/main.js');
+        // scriptMain.setAttribute('src', '/static/js/main.bundle.js?' + Date.now());
+        // document.body.appendChild(scriptMain);
+        //  yarn start로 실행하는 경우 코드 끝
+
+        //  cordova serve로 실행하는 경우 코드 시작
+        window.wink_cordova_env = 'staging';
+        window.wink_cordova_dev_host = 'http://server.local.danbi';        
+        var scriptMain = document.createElement('script');
+        scriptMain.setAttribute('src', 'static/js/main.js');
+        document.body.appendChild(scriptMain);
+        //  cordova serve로 실행하는 경우 코드 끝
       }
     }
     init();
   </script>
-</body>
+  <!-- <script type="text/javascript" src="/static/js/main.js"></script></body> -->
+
 </html>
