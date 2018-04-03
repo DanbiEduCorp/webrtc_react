@@ -53,6 +53,7 @@ function nonComments(obj) {
 // Starting here
 
 module.exports = function (context) {
+  console.log('iosrtc-swift-support.js [INFO] started');
   var
     projectRoot = context.opts.projectRoot,
     projectName = getProjectName(projectRoot),

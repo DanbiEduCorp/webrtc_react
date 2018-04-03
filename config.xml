@@ -34,8 +34,10 @@
             <string>Blink uses your microphone to make calls.</string>
         </config-file>
     </platform>
-    <plugin name="onesignal-cordova-plugin" spec="~2.3.3" />
     <plugin name="cordova-plugin-vibration" spec="~3.0.1" />
+    <plugin name="cordova-plugin-iosrtc" spec="^4.0.2" />
+    <plugin name="cordova-plugin-device" spec="^2.0.1" />
     <engine name="browser" spec="^5.0.3" />
+    <engine name="ios" spec="^4.5.4" />
     <engine name="android" spec="^6.2.3" />
 </widget>

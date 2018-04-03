@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
     crossorigin="anonymous">
-  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+  <!-- <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script> -->
   <!-- <script src="cordova.js"></script> -->
 </head>
 
@@ -22,48 +22,47 @@
     crossorigin="anonymous"></script>
   <script>
     function init() {
-      const uagentLow = navigator.userAgent.toLocaleLowerCase();
-      console.info('agent info: ' + uagentLow);
+      window.wink_cordova_env = 'staging';
+      // window.wink_cordova_dev_host = 'http://server.local.danbi';
 
-      if (~uagentLow.indexOf('iphone') || (~uagentLow.indexOf('android') && ~uagentLow.indexOf('wv'))) {
-        window.wink_cordova_env = 'staging';
-        window.wink_cordova_dev_host = 'http://server.local.danbi';        
+      if (window.wink_cordova_env === undefined) {
+        //  yarn start..
+        console.warn('브라우저 상태에서는 플러그인 테스트를 할 수 없습니다.');
+        var scriptShared = document.createElement('script');
+        scriptShared.setAttribute('src', '/shared.js?' + Date.now());
+        document.body.appendChild(scriptShared);
+
+        var scriptMain = document.createElement('script');
+        scriptMain.setAttribute('src', '/static/js/main.bundle.js?' + Date.now());
+        document.body.appendChild(scriptMain);
+      } else {
+        //  cordova..
+        const uagentLow = navigator.userAgent.toLocaleLowerCase();
+        console.info('agent info: ' + uagentLow);
+
         var scriptTag = document.createElement('script');
         scriptTag.setAttribute('src', 'cordova.js');
         document.head.appendChild(scriptTag);
 
-        document.addEventListener("deviceready", onDeviceReady, false);
-        function onDeviceReady() {
-          console.info('onDeviceReady');
+        if (~uagentLow.indexOf('iphone') || (~uagentLow.indexOf('android') && ~uagentLow.indexOf('wv'))) {
+          document.addEventListener("deviceready", onDeviceReady, false);
+          function onDeviceReady() {
+            console.info('onDeviceReady');
+            if (window.device.platform === 'iOS') {
+              cordova.plugins.iosrtc.registerGlobals();             
+            }
+            // load adapter.js
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "https://webrtc.github.io/adapter/adapter-latest.js";
+            script.async = false;
+            document.getElementsByTagName("head")[0].appendChild(script);
+          }
         }
-
+        
         var scriptMain = document.createElement('script');
         scriptMain.setAttribute('src', 'static/js/main.js');
         document.body.appendChild(scriptMain);
-      } else {
-        //  브라우저로 띄우는 경우는 개발 환경에서만이라고 가정하고 작성한 코드
-        //  yarn start로 구동한 경우에 해당하며, cordova server로 구동한 경우에는
-        //  주석처리한 부분으로 교체해야 한다.
-
-        //  yarn start로 실행하는 경우 코드 시작
-        // console.warn('브라우저 상태에서는 플러그인 테스트를 할 수 없습니다.');
-        // var scriptShared = document.createElement('script');
-        // scriptShared.setAttribute('src', '/shared.js?' + Date.now());
-        // document.body.appendChild(scriptShared);
-
-        // var scriptMain = document.createElement('script');
-        // // scriptMain.setAttribute('src', 'static/js/main.js');
-        // scriptMain.setAttribute('src', '/static/js/main.bundle.js?' + Date.now());
-        // document.body.appendChild(scriptMain);
-        //  yarn start로 실행하는 경우 코드 끝
-
-        //  cordova serve로 실행하는 경우 코드 시작
-        window.wink_cordova_env = 'staging';
-        window.wink_cordova_dev_host = 'http://server.local.danbi';        
-        var scriptMain = document.createElement('script');
-        scriptMain.setAttribute('src', 'static/js/main.js');
-        document.body.appendChild(scriptMain);
-        //  cordova serve로 실행하는 경우 코드 끝
       }
     }
     init();
