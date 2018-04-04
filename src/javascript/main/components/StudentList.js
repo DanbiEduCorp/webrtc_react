@@ -42,6 +42,8 @@ class StudentList extends React.Component {
 
     componentDidMount() {
         this.getList();
+        console.log('[StudentList] studentM: ', studentM);
+        console.log('[StudentList] studentW: ', studentW);
     }
 
     getList() {

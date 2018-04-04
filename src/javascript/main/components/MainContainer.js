@@ -20,6 +20,7 @@ class MainContainer extends React.Component {
 
     componentDidMount() {
         // this.getList();
+        console.log('[MainContainer] main image: ', main);
     }
 
     render() {
