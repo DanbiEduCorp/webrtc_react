@@ -14,14 +14,14 @@
         "antd-mobile": "2.1.6",
         "axios": "^0.16.2",
         "cordova-call": "^1.1.6",
-        "cordova-ios": "^4.5.4",
+        "cordova-ios": "^5.0.1",
         "cordova-plugin-add-swift-support": "^2.0.2",
         "cordova-plugin-android-permissions": "^1.0.0",
         "cordova-plugin-app-version": "~0.1.9",
         "cordova-plugin-appavailability": "^0.4.2",
         "cordova-plugin-customurlscheme": "^4.3.0",
         "cordova-plugin-inappbrowser": "^3.0.0",
-        "cordova-plugin-iosrtc": "^4.0.2",
+        "cordova-plugin-iosrtc-simplyrtc": "4.0.3-rc4",
         "cordova-plugin-market": "^1.2.0",
         "cordova-plugin-splashscreen": "^5.0.2",
         "cordova-plugin-statusbar": "^2.4.2",
@@ -200,8 +200,8 @@
             "cordova-plugin-inappbrowser": {},
             "cordova-plugin-statusbar": {},
             "cordova-plugin-add-swift-support": {},
-            "cordova-plugin-iosrtc": {},
-            "cordova-call": {}
+            "cordova-call": {},
+            "cordova-plugin-iosrtc-simplyrtc": {}
         },
         "platforms": [
             "ios"
