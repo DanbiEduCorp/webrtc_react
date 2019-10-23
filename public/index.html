@@ -18,8 +18,8 @@
         console.info('agent info: ' + uagentLow);
 
         if (~uagentLow.indexOf('iphone') || ~uagentLow.indexOf('ipad') || (~uagentLow.indexOf('android') && ~uagentLow.indexOf('wv'))) {
-            // window.wink_cordova_env = 'staging';
-            window.wink_cordova_env = 'production';
+            window.wink_cordova_env = 'staging';
+            // window.wink_cordova_env = 'production';
             window.wink_cordova_dev_host = 'http://server.local.danbi';
 
             // var scriptTag = document.createElement('script');
@@ -29,6 +29,9 @@
             document.addEventListener("deviceready", onDeviceReady, false);
             function onDeviceReady() {
                 console.info('onDeviceReady');
+                if(window.StatusBar) {
+                    window.StatusBar.styleDefault();
+                }
             }
 
             var scriptMain = document.createElement('script');

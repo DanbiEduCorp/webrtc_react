@@ -46,7 +46,6 @@ class App extends React.Component {
         if (this.platform !== PLATFORM.browser) {
             document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
         }
-
     }
 
     modifyActor() {
@@ -64,7 +63,7 @@ class App extends React.Component {
     }
 
     onDeviceReady() {
-        if (window.cordova.platformId === 'ios') {
+        if (window.cordova.platformId.toLocaleLowerCase() === 'ios') {
             window.cordova.plugins.iosrtc.registerGlobals();
         }
         // push 제거

@@ -34,11 +34,8 @@ const makeRTC = (socket, params = null) => {
         localVideoEl: 'myVideo',
         // https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints
         media: {
-            video: {
-                facingMode: {exact: 'user'}
-            },
-            audio: {
-            }
+            video: true,
+            audio: true
         },
     });
 };
