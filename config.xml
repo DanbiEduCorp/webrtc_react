@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.danbiedu.wink.parent.ios" ios-CFBundleVersion="201906171702" version="1.0.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.danbiedu.wink.parent.ios" ios-CFBundleVersion="201911041645" version="1.2.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <hook src="hooks/build.sh" type="before_prepare" />
     <name>윙크 영상통화</name>
     <description>
@@ -52,21 +52,23 @@
         <splash src="src/resource/screen/ios/Default@2x~ipad~anyany.png" />
         <splash src="src/resource/screen/ios/Default@2x~ipad~comany.png" />
         <preference name="Orientation" value="portrait" />
-        <preference name="StatusBarStyle" value="default" />
-        <preference name="UseSwiftLanguageVersion" value="3" />
-        <hook src="hooks/iosrtc-swift-support.js" type="after_platform_add" />
+        <edit-config file="*-Info.plist" mode="merge" target="UIViewControllerBasedStatusBarAppearance">
+            <true />
+        </edit-config>
         <config-file parent="NSCameraUsageDescription" target="*-Info.plist">
-            <string>Blink uses your camera to make video calls.</string>
+            <string>This Application uses your camera to make video calls.</string>
         </config-file>
         <config-file parent="NSContactsUsageDescription" target="*-Info.plist">
-            <string>Blink needs access to your contacts in order to be able to call them.</string>
+            <string>This Application needs access to your contacts in order to be able to call them.</string>
         </config-file>
         <config-file parent="NSMicrophoneUsageDescription" target="*-Info.plist">
-            <string>Blink uses your microphone to make calls.</string>
+            <string>This Application uses your microphone to make calls.</string>
+        </config-file>
+        <config-file parent="NSBluetoothAlwaysUsageDescription" target="*-Info.plist">
+            <string>This Application uses your wireless headphones and microphone to make calls.</string>
         </config-file>
     </platform>
     <plugin name="cordova-plugin-android-permissions" spec="^1.0.0" />
-    <plugin name="onesignal-cordova-plugin" spec="^2.3.3" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <plugin name="cordova-plugin-vibration" spec="~3.0.1" />
     <plugin name="cordova-plugin-app-version" spec="~0.1.9" />
@@ -81,8 +83,6 @@
     <plugin name="cordova-plugin-market" spec="^1.2.0" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
-    <plugin name="cordova-plugin-add-swift-support" spec="^2.0.2" />
-    <plugin name="cordova-plugin-iosrtc" spec="^4.0.2" />
     <plugin name="cordova-call" spec="^1.1.6" />
-    <engine name="ios" spec="^4.5.4" />
+    <plugin name="cordova-plugin-iosrtc" spec="6.0.1" />
 </widget>

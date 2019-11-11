@@ -340,21 +340,21 @@ class VideoPhone extends Component {
 
     renderCameraSwitchButton() {
         return (
-          <div className="videophone-camera-switch">
-              <img src="https://s.wink.co.kr/app/parents/images/parents/btn_camera_change.png" alt="" onClick={e => this.changeCamera(e)}/>
-          </div>
+            <div className="videophone-camera-switch">
+                <img src="https://s.wink.co.kr/app/parents/images/parents/btn_camera_change.png" alt="" onClick={e => this.changeCamera(e)}/>
+            </div>
         )
     }
 
     renderSpinner() {
         return (
-          <div className="videophone-spinner">
-              <Loader lines={12} length={12} width={8} radius={30}
-                      color="#fff" className="spinner" zIndex={2e9} top="50%" left="50%" scale={1.00}
-                      loadedClassName="loadedContent" >
-              </Loader>
-              <CustomIcon roots="FontAwesome" type="FaVideoCamera" className="loader-icon" sizes="lg"/>
-          </div>
+            <div className="videophone-spinner">
+                <Loader lines={12} length={12} width={8} radius={30}
+                        color="#fff" className="spinner" zIndex={2e9} top="50%" left="50%" scale={1.00}
+                        loadedClassName="loadedContent" >
+                </Loader>
+                <CustomIcon roots="FontAwesome" type="FaVideoCamera" className="loader-icon" sizes="lg"/>
+            </div>
         )
     }
 

@@ -90,7 +90,6 @@ class App extends React.Component {
 
     // 푸시 메세지 수신 시 처리한다.
     onPushNotify = (data) => {
-        console.log('push:;, ', data);
         if (data.handleType === 'received') {
             // 영상통화 수신 기능 제거
             return ;

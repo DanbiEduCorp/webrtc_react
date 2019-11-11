@@ -11,10 +11,12 @@ yarn-debug.log*
 yarn-error.log*
 yarn.lock
 /.idea
+/.vscode
+/.travis.yml
 *.orig
 package-lock.json
 
 # app
 /platforms
 /plugins
-/www
+/www/*

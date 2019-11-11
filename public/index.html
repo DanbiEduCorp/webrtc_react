@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <title>윙크 학부모 아이폰</title>
   <script src="vendors/adapter-latest.js"></script>
-    <script src="cordova.js"></script>
+  <script src="cordova.js"></script>
 </head>
 
 <body>
@@ -18,8 +18,8 @@
         console.info('agent info: ' + uagentLow);
 
         if (~uagentLow.indexOf('iphone') || ~uagentLow.indexOf('ipad') || (~uagentLow.indexOf('android') && ~uagentLow.indexOf('wv'))) {
-            // window.wink_cordova_env = 'staging';
-            window.wink_cordova_env = 'production';
+            window.wink_cordova_env = 'staging';
+            // window.wink_cordova_env = 'production';
             window.wink_cordova_dev_host = 'http://server.local.danbi';
 
             // var scriptTag = document.createElement('script');
@@ -29,11 +29,21 @@
             document.addEventListener("deviceready", onDeviceReady, false);
             function onDeviceReady() {
                 console.info('onDeviceReady');
+                if(window.StatusBar) {
+                    window.StatusBar.styleDefault();
+                }
+
+                if(window.cordova && window.cordova.plugins) {
+                  console.log('cordova plugin loaded');
+                } else {
+                  console.log('cordova plugin not loaded');
+                }
+              var scriptMain = document.createElement('script');
+              scriptMain.setAttribute('src', 'static/js/main.js');
+              document.body.appendChild(scriptMain);
             }
 
-            var scriptMain = document.createElement('script');
-            scriptMain.setAttribute('src', 'static/js/main.js');
-            document.body.appendChild(scriptMain);
+
         } else {
             //  브라우저로 띄우는 경우는 개발 환경에서만이라고 가정하고 작성한 코드
             //  yarn start로 구동한 경우에 해당하며, cordova server로 구동한 경우에는
