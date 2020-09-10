@@ -64,13 +64,51 @@ class StudentList extends React.Component {
             });
     }
 
+    onClickOpenDeviceSetting() {
+        if(window.cordova && window.cordova.plugins.settings) {
+            window.cordova.plugins.settings.open("application_details",
+                () => console.log('app settings open success'),
+                (err) => console.log('app settings open error ', err)
+            );
+        } else {
+            console.log('window.cordova.plugins.settings is not defined');
+        }
+    }
+
+    onOpenGetUserMediaErrorModal(){
+        Modal.alert('권한 설정', (<div><p>영상통화를 위해서는 카메라, 마이크 권한이 필요합니다.</p><p>권한 설정상태를 확인해주세요.</p></div>), [
+            { text: '취소', onPress: () => {return false;}, style: 'default'},
+            { text: '확인', onPress: () => this.onClickOpenDeviceSetting()}
+        ]);
+    }
+
     confirmModal(e, item) {
         e.preventDefault();
-        const title = `${item.authHumanName} 학생에게 영상통화 하시겠습니까?`;
-        Modal.alert('영상통화', title, [
-            { text: '취소', onPress: () => {return false;}, style: 'default'},
-            { text: '확인', onPress: () => this.call(item)}
-        ]);
+        if(navigator.mediaDevices.getUserMedia) {
+            return new Promise((resolve, reject) => {
+                try {
+                    console.log('getUserMedia try ');
+                    return resolve(navigator.mediaDevices.getUserMedia({ audio: true, video: true }));
+                } catch(err) {
+                    console.log('getUserMedia catch ');
+                    return reject(err);
+                }
+            }).then((userMedia) => {
+                console.log('getUserMedia success ', userMedia);
+                const title = `${item.authHumanName} 학생에게 영상통화 하시겠습니까?`;
+                Modal.alert('영상통화', title, [
+                    { text: '취소', onPress: () => {return false;}, style: 'default'},
+                    { text: '확인', onPress: () => this.call(item)}
+                ]);
+            }).catch((err) => {
+                console.log('getUserMedia denied ', err);
+                this.onOpenGetUserMediaErrorModal();
+            });
+        } else {
+            console.log('can not use getUserMedia ');
+            this.onOpenGetUserMediaErrorModal();
+        }
+
     }
 
     receiveCall(e, item) {

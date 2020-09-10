@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch) => {
 
 class Settings extends React.Component {
     confirmLogout() {
-        Modal.alert('로그아웃', '학부모앱 서비스에서 로그아웃 하시겠습니까?', [
+        Modal.alert('로그아웃', '윙크 영상통화앱 서비스에서 로그아웃 하시겠습니까?', [
             { text: '취소', onPress: () => {return false;}, style: 'default'},
             { text: '확인', onPress: () => this.logout()}
         ]);

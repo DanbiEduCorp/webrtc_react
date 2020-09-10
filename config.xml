@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.danbiedu.wink.parent.ios" ios-CFBundleVersion="201911041645" version="1.2.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.danbiedu.wink.parent.ios" ios-CFBundleVersion="202003251455" version="1.3.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <hook src="hooks/build.sh" type="before_prepare" />
     <name>윙크 영상통화</name>
     <description>
@@ -82,7 +82,9 @@
     <plugin name="cordova-plugin-appavailability" spec="^0.4.2" />
     <plugin name="cordova-plugin-market" spec="^1.2.0" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
-    <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.3" />
     <plugin name="cordova-call" spec="^1.1.6" />
     <plugin name="cordova-plugin-iosrtc" spec="6.0.1" />
+    <plugin name="cordova-open-native-settings" spec="~1.5.2" />
+    <plugin name="cordova-plugin-audioroute" spec="~0.1.2" />
 </widget>

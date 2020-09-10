@@ -15,16 +15,15 @@
     "axios": "^0.16.2",
     "cordova-call": "^1.1.6",
     "cordova-ios": "^5.0.1",
-    "cordova-plugin-add-swift-support": "^2.0.2",
     "cordova-plugin-android-permissions": "^1.0.0",
     "cordova-plugin-app-version": "~0.1.9",
     "cordova-plugin-appavailability": "^0.4.2",
     "cordova-plugin-customurlscheme": "^4.3.0",
     "cordova-plugin-inappbrowser": "^3.0.0",
-    "cordova-plugin-iosrtc": "6.0.1",
+    "cordova-plugin-iosrtc": "6.0.3",
     "cordova-plugin-market": "^1.2.0",
     "cordova-plugin-splashscreen": "^5.0.2",
-    "cordova-plugin-statusbar": "^2.4.2",
+    "cordova-plugin-statusbar": "2.4.3",
     "cordova-plugin-vibration": "~3.0.1",
     "cordova-plugin-whitelist": "1",
     "danbi-msgclient": "^0.1.2",
@@ -188,7 +187,7 @@
       "cordova-plugin-app-version": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-customurlscheme": {
-        "URL_SCHEME": "parentvideoapp",
+        "URL_SCHEME": "winkparentvideocallapp",
         "ANDROID_SCHEME": " ",
         "ANDROID_HOST": " ",
         "ANDROID_PATHPREFIX": "/"
@@ -196,10 +195,9 @@
       "cordova-plugin-appavailability": {},
       "cordova-plugin-market": {},
       "cordova-plugin-inappbrowser": {},
+      "cordova-call": {},
       "cordova-plugin-statusbar": {},
-      "cordova-plugin-add-swift-support": {},
-      "cordova-plugin-iosrtc": {},
-      "cordova-call": {}
+      "cordova-plugin-iosrtc": {}
     },
     "platforms": [
       "ios"
