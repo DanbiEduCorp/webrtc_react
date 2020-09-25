@@ -134,12 +134,12 @@ class Login extends React.Component {
                                 <img src={logo} alt="logo" className="logo"/>
                             </Flex.Item>
                             <Flex.Item className="login-top-contents-text">
-                                윙크 영상통화앱을 이용하면<br/>
-                                어디서든 우리 아이와 손쉽게 영상통화룰 할 수 있습니다.<br/>
-                                지금 바로 보고싶은 얼굴을 보러 가볼까요?
+                                윙크 영상통화 앱을 이용하면<br/>
+                                어디서든 우리 아이와 손쉽게 영상통화를 할 수 있습니다.<br/>
+                                지금 바로 보고 싶은 얼굴을 보러 가볼까요?
                             </Flex.Item>
                             <Flex.Item className="login-top-contents-notice">
-                                ※ 윙크 영상통화앱은 윙크 학부모앱의 계정으로 이용이 가능합니다.
+                                ※ 윙크 영상통화 앱은 윙크 학부모 앱의 계정으로 이용이 가능합니다.
                             </Flex.Item>
                         </Flex>
                     </Flex.Item>

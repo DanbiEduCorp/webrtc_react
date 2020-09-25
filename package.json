@@ -130,7 +130,9 @@
     "webpack-dev-server": "2.2.0",
     "webpack-manifest-plugin": "1.1.0",
     "webpack-node-externals": "^1.6.0",
-    "whatwg-fetch": "^2.0.3"
+    "whatwg-fetch": "^2.0.3",
+    "cordova-open-native-settings": "~1.5.2",
+    "cordova-plugin-audioroute": "~0.1.2"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -197,7 +199,9 @@
       "cordova-plugin-inappbrowser": {},
       "cordova-call": {},
       "cordova-plugin-statusbar": {},
-      "cordova-plugin-iosrtc": {}
+      "cordova-plugin-iosrtc": {},
+      "cordova-open-native-settings": {},
+      "cordova-plugin-audioroute": {}
     },
     "platforms": [
       "ios"
